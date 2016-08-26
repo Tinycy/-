@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>轮播</title>
+    <script src="jQuery v3.1.0.js"></script>
+</head>
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing: border-box;
+    }
+    html,body{
+        width:100%;
+        height:100%;
+
+    }
+
+    ul,li{
+        width:352px;
+        height:220px;
+        /*border:solid 1px black;*/
+        display: block;
+        position: absolute;
+        left:calc((100% - 352px)/2);
+        top:30px;
+    }
+    li{
+        top:0px;
+        opacity: 0;
+    }
+    span{
+        width:20px;
+        height:20px;
+        background:white;
+        display: block;
+        position: relative;
+        float:left;
+        margin:5px;
+        border-radius:50%;
+        top:180px;
+        left:calc((352px - 80px)/2);
+    }
+    .span{
+        background:red;
+    }
+    .li{
+        opacity: 1;
+    }
+</style>
+<body>
+<main>
+    <ul>
+        <li class="li"> <img src="imgs/0.jpg" alt=""> </li>
+        <li> <img src="imgs/1.jpg" alt=""></li>
+        <li><img src="imgs/2.jpg" alt=""></li>
+
+        <span class="span"></span><span></span><span></span>
+    </ul>
+</main>
+<script>
+     window.onload = function() {
+         var start = 0;
+         var end = $('li').length;
+         timer = setInterval(auto,2000);
+         //控制打开时候自动轮播
+         function auto() {
+             if (start >= end) {
+                 start = 0;
+             }
+             $(".li").removeClass();
+             $('li')[start].className = 'li';
+             $('.span').removeClass();
+             $('span')[start].className = 'span';
+             start++;
+         }
+         $('span').each(function(index) {
+             $(this).hover(function () {
+                 clearInterval(timer);
+                $('span').eq(index).addClass('span').siblings().removeClass('span');
+                $('li').eq(index).addClass('li').siblings().removeClass('li');
+                 console.log(index);
+             }, function () {
+                 start = $(this).index() + 1;
+                 timer = setInterval(auto, 1000);
+             });
+
+         });
+     }
+</script>
+</body>
+</html>
